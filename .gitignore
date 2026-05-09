@@ -13,9 +13,6 @@ dist/
 .env
 .env.*
 
-# git-crypt key — never commit this
-aduro.key
-
 # OS
 .DS_Store
 Thumbs.db
