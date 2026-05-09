@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+**/public/
+
+# Personal docs at repo root
+/*.md
+!README.md
+
+# Environment & secrets
+.env
+.env.*
+
+# git-crypt key — never commit this
+aduro.key
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & tools
+.idea/
+.claude/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*

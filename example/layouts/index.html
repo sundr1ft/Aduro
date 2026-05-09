@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{site.title}}</title>
+    {{#if site.description}}
+    <meta name="description" content="{{site.description}}" />
+    {{/if}}
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      {{> header}}
+      <main>
+        {{#if posts.length}}
+        <ul class="post-list">
+          {{#each posts}}
+          <li>
+            <a href="{{url}}">{{title}}</a>
+            {{#if date}}<span class="post-date">{{date date "short"}}</span>{{/if}}
+          </li>
+          {{/each}}
+        </ul>
+        {{else}}
+        <p>No posts yet.</p>
+        {{/if}}
+      </main>
+      {{> footer}}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "aduro",
+  "version": "0.1.0",
+  "description": "Minimal personal static site generator",
+  "scripts": {
+    "build": "tsx src/index.ts build site",
+    "serve": "tsx src/index.ts serve site",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "lint:md": "markdownlint-cli2 \"site/content/**/*.md\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "install-git-crypt": "powershell -ExecutionPolicy Bypass -File scripts/install-git-crypt.ps1"
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "gray-matter": "^4.0.3",
+    "handlebars": "^4.7.8",
+    "js-yaml": "^4.1.0",
+    "marked": "^12.0.0",
+    "ws": "^8.17.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.0.0",
+    "@types/ws": "^8.5.10",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "markdownlint-cli2": "^0.22.1",
+    "prettier": "^3.8.3",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.59.2"
+  }
+}

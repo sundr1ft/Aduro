@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{page.title}} — {{site.title}}</title>
+    {{#if page.description}}
+    <meta name="description" content="{{page.description}}" />
+    {{/if}}
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      {{> header}}
+      <main>
+        <article>
+          <h1 class="post-title">{{page.title}}</h1>
+          {{#if page.date}}
+          <p class="post-meta">{{date page.date "short"}}</p>
+          {{/if}} {{{ content }}}
+        </article>
+      </main>
+      {{> footer}}
+    </div>
+  </body>
+</html>
