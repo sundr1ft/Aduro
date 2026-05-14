@@ -1,5 +1,5 @@
 {
-  "name": "aduro",
+  "name": "@sundr1ft/aduro",
   "version": "0.1.0",
   "description": "Minimal personal static site generator",
   "license": "MIT",

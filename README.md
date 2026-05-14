@@ -5,13 +5,13 @@ Minimal static site generator for personal sites and blogs. Write Markdown, get 
 ## Install
 
 ```sh
-npm install -g aduro
+npm install -g @sundr1ft/aduro
 ```
 
 Or as a project dependency:
 
 ```sh
-npm install aduro
+npm install @sundr1ft/aduro
 ```
 
 ## Usage
@@ -86,7 +86,7 @@ Layouts are Handlebars templates. Available context:
     "serve": "aduro serve ."
   },
   "dependencies": {
-    "aduro": "^0.1.0"
+    "@sundr1ft/aduro": "^0.1.0"
   }
 }
 ```
