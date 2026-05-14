@@ -9,7 +9,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
@@ -21,4 +21,13 @@ jobs:
 
       - run: npm ci
       - run: npm test
+
+      - name: Generate SBOM
+        run: npm sbom --sbom-format cyclonedx --omit dev > sbom.cyclonedx.json
+
+      - name: Create GitHub Release
+        run: gh release create ${{ github.ref_name }} sbom.cyclonedx.json --generate-notes --title ${{ github.ref_name }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: npm publish --provenance --access public
