@@ -55,7 +55,7 @@ jobs:
       - run: npm ci
 
       - name: Pack
-        run: npm pack --pack-destination /tmp/pkg
+        run: mkdir -p /tmp/pkg && npm pack --pack-destination /tmp/pkg
 
       - name: Install from tarball
         run: |
