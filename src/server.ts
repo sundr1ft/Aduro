@@ -1,6 +1,6 @@
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import { readFileSync, existsSync } from 'fs';
-import { join, extname, resolve } from 'path';
+import { join, extname, resolve, normalize, relative, isAbsolute } from 'path';
 import chokidar from 'chokidar';
 import { WebSocketServer } from 'ws';
 import { build } from './build.js';
@@ -30,19 +30,28 @@ export function serve(siteDir: string, outDir: string, port = 3000): void {
 
   const server = createServer((req: IncomingMessage, res: ServerResponse) => {
     let urlPath = req.url?.split('?')[0] ?? '/';
+    try {
+      urlPath = decodeURIComponent(urlPath);
+    } catch {
+      res.writeHead(400, { 'Content-Type': 'text/plain' });
+      res.end('Bad request');
+      return;
+    }
     if (urlPath.endsWith('/')) urlPath += 'index.html';
 
-    const filePath = join(outDir, urlPath);
     const safeRoot = resolve(outDir);
-    if (!resolve(filePath).startsWith(safeRoot + '/') && resolve(filePath) !== safeRoot) {
+    const normalizedPath = normalize(urlPath).replace(/^([/\\])+/, '');
+    const candidatePath = resolve(safeRoot, normalizedPath);
+    const rel = relative(safeRoot, candidatePath);
+    if (rel.startsWith('..') || isAbsolute(rel)) {
       res.writeHead(403, { 'Content-Type': 'text/plain' });
       res.end('Forbidden');
       return;
     }
 
-    if (existsSync(filePath)) {
-      const ext = extname(filePath).toLowerCase();
-      let body: Buffer | string = readFileSync(filePath);
+    if (existsSync(candidatePath)) {
+      const ext = extname(candidatePath).toLowerCase();
+      let body: Buffer | string = readFileSync(candidatePath);
       if (ext === '.html') {
         body = body.toString('utf-8').replace('</body>', `${RELOAD_SCRIPT}</body>`);
       }
