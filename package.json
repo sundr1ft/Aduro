@@ -2,10 +2,48 @@
   "name": "aduro",
   "version": "0.1.0",
   "description": "Minimal personal static site generator",
+  "license": "MIT",
+  "keywords": [
+    "static-site-generator",
+    "ssg",
+    "blog",
+    "markdown",
+    "handlebars",
+    "cli"
+  ],
+  "author": "sundr1ft",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sundr1ft/Aduro.git"
+  },
+  "homepage": "https://github.com/sundr1ft/Aduro#readme",
+  "bugs": {
+    "url": "https://github.com/sundr1ft/Aduro/issues"
+  },
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/lib.d.ts",
+      "default": "./dist/lib.js"
+    }
+  },
+  "bin": {
+    "aduro": "./dist/index.js"
+  },
   "scripts": {
-    "build": "tsx src/index.ts build site",
-    "serve": "tsx src/index.ts serve site",
+    "compile": "tsc",
+    "prepare": "tsc",
+    "prepublishOnly": "npm run typecheck && npm run lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev:build": "tsx src/index.ts build site",
+    "dev:serve": "tsx src/index.ts serve site",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
     "lint:md": "markdownlint-cli2 \"site/content/**/*.md\"",
@@ -30,6 +68,7 @@
     "prettier": "^3.8.3",
     "tsx": "^4.0.0",
     "typescript": "^6.0.0",
-    "typescript-eslint": "^8.59.2"
+    "typescript-eslint": "^8.59.2",
+    "vitest": "^4.1.6"
   }
 }

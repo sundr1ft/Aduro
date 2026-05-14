@@ -15,6 +15,42 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: npm run compile
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run format:check
+      - run: npm test
+
+  smoke:
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm pack
+
+      - name: Install from tarball
+        run: |
+          mkdir -p /tmp/smoke
+          cd /tmp/smoke
+          npm init -y
+          npm install ${{ github.workspace }}/aduro-*.tgz
+
+      - name: CLI responds to --help
+        run: /tmp/smoke/node_modules/.bin/aduro --help
+
+      - name: Build example site
+        run: /tmp/smoke/node_modules/.bin/aduro build ${{ github.workspace }}/example /tmp/smoke-out
+
+      - name: Verify output
+        run: |
+          test -f /tmp/smoke-out/index.html
+          test -f /tmp/smoke-out/posts/hello-world/index.html
+          test -f /tmp/smoke-out/posts/no-date-post/index.html
+          test -f /tmp/smoke-out/style.css
+          ! test -f /tmp/smoke-out/posts/draft-post/index.html

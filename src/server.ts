@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from 'fs';
 import { join, extname } from 'path';
 import chokidar from 'chokidar';
 import { WebSocketServer } from 'ws';
-import { build } from './build';
+import { build } from './build.js';
 
 const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',

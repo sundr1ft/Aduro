@@ -2,7 +2,7 @@ import { readFileSync, readdirSync, statSync } from 'fs';
 import { join, basename, extname, relative } from 'path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
-import { Page, PageData } from './types';
+import { Page, PageData } from './types.js';
 
 function walk(dir: string): string[] {
   const results: string[] = [];

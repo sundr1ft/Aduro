@@ -1,9 +1,9 @@
 import { mkdirSync, writeFileSync, existsSync, cpSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { load as parseYaml } from 'js-yaml';
-import { loadPages } from './content';
-import { loadLayouts } from './render';
-import { Page, SiteConfig, PostSummary } from './types';
+import { loadPages } from './content.js';
+import { loadLayouts } from './render.js';
+import { Page, SiteConfig, PostSummary } from './types.js';
 
 function loadConfig(siteDir: string): SiteConfig {
   const raw = readFileSync(join(siteDir, 'config.yaml'), 'utf-8');

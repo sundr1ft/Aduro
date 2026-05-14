@@ -1,6 +1,7 @@
+#!/usr/bin/env node
 import { resolve, join } from 'path';
-import { build } from './build';
-import { serve } from './server';
+import { build } from './build.js';
+import { serve } from './server.js';
 
 const [, , command, siteDirArg, ...rest] = process.argv;
 
