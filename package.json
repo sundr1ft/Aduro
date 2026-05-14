@@ -70,7 +70,7 @@
   "devDependencies": {
     "@secretlint/secretlint-rule-preset-recommend": "^13.0.0",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.0.0",
+    "@types/node": "^25.7.0",
     "@types/ws": "^8.5.10",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
