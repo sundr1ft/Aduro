@@ -1,4 +1,2 @@
 #!/bin/sh
-staged=$(git diff --cached --name-only --diff-filter=d)
-[ -z "$staged" ] && exit 0
-echo "$staged" | tr '\n' '\0' | xargs -0 ./node_modules/.bin/secretlint
+./node_modules/.bin/lint-staged
