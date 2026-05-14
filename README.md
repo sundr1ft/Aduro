@@ -17,10 +17,12 @@ npm install @sundr1ft/aduro
 ## Usage
 
 ```sh
+aduro init <site-dir> [out-dir]
 aduro build <site-dir> [out-dir]
 aduro serve <site-dir> [--port=3000]
 ```
 
+`init` scaffolds a new project in the specified directory.
 `build` compiles your site to `<site-dir>/public` by default.  
 `serve` builds, then watches for changes and live-reloads the browser.
 
