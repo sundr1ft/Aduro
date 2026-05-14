@@ -53,14 +53,17 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm pack
+
+      - name: Pack
+        id: pack
+        run: echo "file=$(npm pack)" >> "$GITHUB_OUTPUT"
 
       - name: Install from tarball
         run: |
           mkdir -p /tmp/smoke
           cd /tmp/smoke
           npm init -y
-          npm install ${{ github.workspace }}/aduro-*.tgz
+          npm install ${{ github.workspace }}/${{ steps.pack.outputs.file }}
 
       - name: CLI responds to --help
         run: /tmp/smoke/node_modules/.bin/aduro --help
