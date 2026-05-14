@@ -26,10 +26,10 @@ aduro serve <site-dir> [--port=3000]
 
 ## Site structure
 
-```
+```text
 my-site/
 ├── config.yaml        # site metadata
-├── content/
+├── content
 │   ├── index.md       # home page (optional)
 │   ├── about.md       # becomes /about/
 │   └── posts/
@@ -59,7 +59,7 @@ title: Hello World
 date: 2025-01-01
 description: My first post
 draft: false
-layout: post   # overrides the default layout
+layout: post # overrides the default layout
 ---
 
 Content goes here.
@@ -69,13 +69,13 @@ Content goes here.
 
 Layouts are Handlebars templates. Available context:
 
-| Variable   | Description                          |
-|------------|--------------------------------------|
-| `site`     | Values from `config.yaml`            |
-| `page`     | Front matter from the current page   |
-| `content`  | Rendered HTML of the page body       |
-| `posts`    | Array of all non-draft posts         |
-| `url`      | URL of the current page              |
+| Variable  | Description                        |
+| --------- | ---------------------------------- |
+| `site`    | Values from `config.yaml`          |
+| `page`    | Front matter from the current page |
+| `content` | Rendered HTML of the page body     |
+| `posts`   | Array of all non-draft posts       |
+| `url`     | URL of the current page            |
 
 ## Using from a separate site repo
 
