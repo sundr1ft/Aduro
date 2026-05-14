@@ -52,7 +52,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "chokidar": "^3.6.0",
+    "chokidar": "^5.0.0",
     "gray-matter": "^4.0.3",
     "handlebars": "^4.7.8",
     "js-yaml": "^4.1.0",
