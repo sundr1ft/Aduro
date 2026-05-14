@@ -77,3 +77,28 @@ jobs:
           test -f /tmp/smoke-out/posts/no-date-post/index.html
           test -f /tmp/smoke-out/style.css
           ! test -f /tmp/smoke-out/posts/draft-post/index.html
+
+      - name: Init new site
+        run: |
+          cd /tmp
+          /tmp/smoke/node_modules/.bin/aduro init smoke-site
+
+      - name: Verify scaffold files
+        run: |
+          test -f /tmp/smoke-site/config.yaml
+          test -f /tmp/smoke-site/layouts/index.html
+          test -f /tmp/smoke-site/layouts/post.html
+          test -f /tmp/smoke-site/layouts/page.html
+          test -f /tmp/smoke-site/layouts/partials/header.html
+          test -f /tmp/smoke-site/layouts/partials/footer.html
+          test -f /tmp/smoke-site/static/style.css
+          test -f /tmp/smoke-site/content/about.md
+
+      - name: Build initialised site
+        run: /tmp/smoke/node_modules/.bin/aduro build /tmp/smoke-site /tmp/smoke-site-out
+
+      - name: Verify initialised site output
+        run: |
+          test -f /tmp/smoke-site-out/index.html
+          test -f /tmp/smoke-site-out/about/index.html
+          test -f /tmp/smoke-site-out/style.css

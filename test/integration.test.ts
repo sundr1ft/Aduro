@@ -1,6 +1,8 @@
 import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { build } from '../src/build.js';
+import { init } from '../src/init.js';
 import { existsSync, readFileSync, mkdtempSync, rmSync } from 'fs';
+import { readFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { tmpdir } from 'os';
@@ -109,4 +111,39 @@ describe('layouts', () => {
   test('footer partial rendered', () => {
     expect(read('posts/hello-world/index.html')).toContain('Built with Aduro');
   });
+});
+
+describe('init', () => {
+  const initBase = mkdtempSync(join(tmpdir(), 'aduro-init-'));
+  const initSite = join(initBase, 'my-site');
+  const initOut = join(initBase, 'my-site-out');
+
+  beforeAll(async () => {
+    await init('my-site', initBase);
+    await build(initSite, initOut);
+  });
+  afterAll(() => rmSync(initBase, { recursive: true, force: true }));
+
+  const initFile = (rel: string) => existsSync(join(initSite, rel));
+  const initRead = (rel: string) => readFileSync(join(initSite, rel), 'utf-8');
+  const outExists = (rel: string) => existsSync(join(initOut, rel));
+
+  test('creates config.yaml', () => expect(initFile('config.yaml')).toBe(true));
+  test('config title matches site name', async () => {
+    const cfg = await readFile(join(initSite, 'config.yaml'), 'utf-8');
+    expect(cfg).toContain('title: my-site');
+  });
+  test('creates index layout', () => expect(initFile('layouts/index.html')).toBe(true));
+  test('creates post layout', () => expect(initFile('layouts/post.html')).toBe(true));
+  test('creates page layout', () => expect(initFile('layouts/page.html')).toBe(true));
+  test('creates header partial', () => expect(initFile('layouts/partials/header.html')).toBe(true));
+  test('creates footer partial', () => expect(initFile('layouts/partials/footer.html')).toBe(true));
+  test('creates stylesheet', () => expect(initFile('static/style.css')).toBe(true));
+  test('creates about page', () => expect(initFile('content/about.md')).toBe(true));
+  test('about page has front matter title', () =>
+    expect(initRead('content/about.md')).toContain('title: About'));
+
+  test('scaffold builds without error', () => expect(outExists('index.html')).toBe(true));
+  test('about page output generated', () => expect(outExists('about/index.html')).toBe(true));
+  test('stylesheet copied to output', () => expect(outExists('style.css')).toBe(true));
 });
