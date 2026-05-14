@@ -38,8 +38,9 @@
   },
   "scripts": {
     "compile": "tsc",
-    "prepare": "tsc",
-    "prepublishOnly": "npm run typecheck && npm run lint",
+    "prepare": "tsc && husky",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm test",
+    "secretlint": "secretlint \"**/*\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "dev:build": "tsx src/index.ts build site",
@@ -59,13 +60,16 @@
     "ws": "^8.17.0"
   },
   "devDependencies": {
+    "@secretlint/secretlint-rule-preset-recommend": "^13.0.0",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.0.0",
     "@types/ws": "^8.5.10",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
     "markdownlint-cli2": "^0.22.1",
     "prettier": "^3.8.3",
+    "secretlint": "^13.0.0",
     "tsx": "^4.0.0",
     "typescript": "^6.0.0",
     "typescript-eslint": "^8.59.2",

@@ -1,6 +1,6 @@
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import { readFileSync, existsSync } from 'fs';
-import { join, extname } from 'path';
+import { join, extname, resolve } from 'path';
 import chokidar from 'chokidar';
 import { WebSocketServer } from 'ws';
 import { build } from './build.js';
@@ -33,6 +33,12 @@ export function serve(siteDir: string, outDir: string, port = 3000): void {
     if (urlPath.endsWith('/')) urlPath += 'index.html';
 
     const filePath = join(outDir, urlPath);
+    const safeRoot = resolve(outDir);
+    if (!resolve(filePath).startsWith(safeRoot + '/') && resolve(filePath) !== safeRoot) {
+      res.writeHead(403, { 'Content-Type': 'text/plain' });
+      res.end('Forbidden');
+      return;
+    }
 
     if (existsSync(filePath)) {
       const ext = extname(filePath).toLowerCase();
